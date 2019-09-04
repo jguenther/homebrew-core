@@ -23,6 +23,7 @@ class Emacs < Formula
   option "with-ctags", "Don't remove the ctags executable that emacs provides"
   option "without-libxml2", "Don't build with libxml2 support"
   option "with-modules", "Compile with dynamic modules support"
+  option "with-json", "Compile with native JSON support"
 
   deprecated_option "cocoa" => "with-cocoa"
   deprecated_option "keep-ctags" => "with-ctags"
@@ -37,6 +38,7 @@ class Emacs < Formula
   depends_on "imagemagick@6" => :optional
   depends_on "librsvg" => :optional
   depends_on "mailutils" => :optional
+  depends_on "jansson" => :optional
 
   def install
     args = %W[
@@ -73,6 +75,7 @@ class Emacs < Formula
     args << "--with-modules" if build.with? "modules"
     args << "--with-rsvg" if build.with? "librsvg"
     args << "--without-pop" if build.with? "mailutils"
+    args << "--with-json" if build.with? "json"
 
     if build.head?
       ENV.prepend_path "PATH", Formula["gnu-sed"].opt_libexec/"gnubin"
